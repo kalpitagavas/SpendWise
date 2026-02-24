@@ -18,11 +18,15 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now } // Removed () so it generates time on creation
 });
 
-userSchema.pre('save', async function() {
-    if (!this.isModified('password')) return;
+userSchema.pre('save', async function(next) { // Added 'next'
+    if (!this.isModified('password')) return next();
 
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    // No next() needed when using an async function in Mongoose
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+      
+    } catch (error) {
+        next(error); // Pass error to Mongoose if hashing fails
+    }
 });
 module.exports = mongoose.model('User', userSchema);

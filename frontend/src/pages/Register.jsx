@@ -18,6 +18,7 @@ const Register = () => {
         setLoading(true);
         try {
             const { data } = await API.post('/auth/register', formData);
+           console.log(data)
             if (data.success || data.userId) {
                 localStorage.setItem('userId', data.userId);
                 alert("Account Created!");
