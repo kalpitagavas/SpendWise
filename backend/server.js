@@ -6,7 +6,11 @@ const ExpressRoute=require("./routes/ExpressRoute")
 const authRoutes=require('./routes/UserRoute')
 const app=express()
 app.use(cors({
-    origin: ["https://spend-wise-lovat.vercel.app", "http://localhost:5173"], // Added Vite's default local port
+    origin: [
+        "https://spend-wise-lovat.vercel.app", 
+        /\.vercel\.app$/, // This allows ALL vercel subdomains
+        "http://localhost:5173"
+    ],
     credentials: true
 }));
 app.use(express.json())
