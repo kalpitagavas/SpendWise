@@ -5,7 +5,10 @@ const connectDB = require("./config/db");
 const ExpressRoute=require("./routes/ExpressRoute")
 const authRoutes=require('./routes/UserRoute')
 const app=express()
-app.use(cors())
+app.use(cors({
+    origin: ["https://spend-wise-lovat.vercel.app", "http://localhost:5173"], // Added Vite's default local port
+    credentials: true
+}));
 app.use(express.json())
 
 connectDB();
