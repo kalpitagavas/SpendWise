@@ -8,11 +8,13 @@ const app=express()
 app.use(cors({
     origin: [
         "https://spend-wise-lovat.vercel.app", 
-        /\.vercel\.app$/, // This allows ALL vercel subdomains
         "http://localhost:5173"
     ],
     credentials: true
 }));
+
+// This line helps handle "Pre-flight" security checks from browsers
+app.options('*', cors());
 app.use(express.json())
 
 connectDB();
